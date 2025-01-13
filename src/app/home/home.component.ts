@@ -34,10 +34,17 @@ export class HomeComponent implements OnInit {
 
   addData() {
     this.base.createData(this.newData).subscribe(() => {
-      this.loadAllDatas()
+      this.loadAllDatas();
+      this.newData = { id: null, name: '', category: '', description: '', price: null }
     })
   }
 
+  updateData(data: any) {
+    data.price = parseFloat(data.price).toFixed(2)
+    this.base.updateData(data).subscribe(() => this.loadAllDatas())
+  }
 
-
+  deleteData(data: {id: string}) {
+    this.base.deleteData(data.id).subscribe(() => this.loadAllDatas())
+  }
 }

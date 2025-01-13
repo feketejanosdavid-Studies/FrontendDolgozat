@@ -20,3 +20,22 @@
         <button (click)="addData()" type="button" class="btn btn-outline-primary me-2">Hozzáad</button>
     </div>
 </div>
+
+<div *ngFor="let data of datas" class="row mb-2 mt-2">
+    <div *ngFor="let columnDef of columns" class="col">
+        <ng-container *ngIf="columnDef.type !== 'plain'; else notchange">
+            <input
+              [type]="columnDef.type"
+              class="form-control"
+              [(ngModel)]="data[columnDef.key]"
+            />
+        </ng-container>
+        <ng-template #notchange>
+            {{ data[columnDef.key] }}
+        </ng-template>
+    </div>
+    <div class="col">
+        <button (click)="updateData(data)" type="button" class="btn btn-outline-success me-2">Szerkeszt</button>
+        <button (click)="deleteData(data)" type="button" class="btn btn-outline-danger">Törlés</button>
+    </div>
+</div>
