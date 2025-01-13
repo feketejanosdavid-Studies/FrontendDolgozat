@@ -6,35 +6,26 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class BaseService {
-  url = 'https://dolgozat-79584-default-rtdb.europe-west1.firebasedatabase.app'
+  private url = 'https://dolgozat-79584-default-rtdb.europe-west1.firebasedatabase.app'
   private dataSubject = new Subject();
 
-  constructor(private http: HttpClient) {
-    this.loadAllDatas();
-   }
+  constructor(private http: HttpClient) {}
 
-   loadAllDatas() {
-    return this.http.get(this.url).subscribe(
-      (data) => this.dataSubject.next(data)
-    )
-   }
+  getDatas() {
+    return this.http.get(`${this.url}/.json`)
+  }
 
-   getAllDatas() {
-    return this.dataSubject
-   }
+  createData(product: any) {
+    product.price = parseFloat(product.price).toFixed(2)
+    return this.http.post(`${this.url}/.json`, product)
+  }
 
-   createNewData(data: any) {
-    return this.http.post(this.url, data).subscribe(
-      () => this.loadAllDatas())
-   }
+  updateData(product: any) {
+    product.price = parseFloat(product.price).toFixed(2)
+    return this.http.put(`${this.url}/${product.id}.json`, product)
+  }
 
-   updateData(id: number, data: any) {
-    return this.http.put(this.url+id, data).subscribe(
-      () => this.loadAllDatas())
-   }
-
-   deleteData(id: number) {
-    return this.http.delete(this.url+id).subscribe(
-      () => this.loadAllDatas())
-   }
+  deleteData(id: string) {
+    return this.http.delete(`${this.url}/${id}.json`)
+  }
 }

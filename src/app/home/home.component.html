@@ -1,1 +1,22 @@
-<p>home works!</p>
+<!-- {{datas|json}} -->
+
+<div class="row">
+    <div *ngFor="let columnDefs of columns" class="col">
+        {{columnDefs.title}}
+    </div>
+    <div class="col">Options</div>
+</div>
+
+<div  class="row mb-2 mt-2">
+    <div *ngFor="let columnDefs of columns" class="col">
+        <ng-container *ngIf="columnDefs.type!='plain'; else notchange">
+            <input [type]="columnDefs.type" class="form-control" [(ngModel)]="newData[columnDefs.key]">
+        </ng-container>
+        <ng-template #notchange>
+            
+        </ng-template>
+    </div>
+    <div class="col">
+        <button (click)="addData()" type="button" class="btn btn-outline-primary me-2">Hozzáad</button>
+    </div>
+</div>
