@@ -1,15 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseService } from '../base.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
+
 export class HomeComponent implements OnInit {
-  datas:any
 
   constructor(private base: BaseService) {}
+
+  language = 'en';
+
+  datas : any
 
   columns = [
     {key: "id", title:"#", type:"plain"},
@@ -19,6 +24,23 @@ export class HomeComponent implements OnInit {
     {key: "price", title:"price", type:"number"},
     
   ]
+
+  translations: { [key: string]: { [key: string]: string } } = {
+    en: {
+      TITLE: 'Product Customization',
+      NAME: 'Name',
+      CATEGORY: 'Category',
+      DESCRIPTION: 'Description',
+      PRICE: 'Price',
+    },
+    hu: {
+      TITLE: 'Termék szerkesztés',
+      NAME: 'Név',
+      CATEGORY: 'Kategória',
+      DESCRIPTION: 'Leírás',
+      PRICE: 'Ár',
+    }
+  };
 
   newData: any = []
 
@@ -37,6 +59,12 @@ export class HomeComponent implements OnInit {
       this.loadAllDatas();
       this.newData = { id: null, name: '', category: '', description: '', price: null }
     })
+  }
+
+  switchLang(lang: string) {
+
+    this.language = lang; 
+ 
   }
 
   updateData(data: any) {
