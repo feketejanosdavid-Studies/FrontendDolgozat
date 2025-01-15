@@ -1,9 +1,12 @@
 <div class="row header mt-5">
     <div *ngFor="let columnDefs of columns" class="col">
-        {{columnDefs.title}}
+        {{columnDefs.title | translate}}
     </div>
-    <div class="col">Options</div>
+    <div class="col">{{ 'OPTIONS' | translate}}</div>
 </div>
+
+<button class="btn btn-outline-dark mb-2" (click)="languagechange('en')">English</button>
+    <button class="btn btn-outline-dark mb-2" (click)="languagechange('hu')">Magyar</button>
 
 <div  class="row mb-4 mt-2 newdata">
     <div *ngFor="let columnDefs of columns" class="col">
